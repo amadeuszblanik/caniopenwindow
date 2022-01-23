@@ -1,9 +1,25 @@
+/* eslint-disable no-magic-numbers */
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import SectionResults from "../src/section/results";
+import { useState } from "react";
+import {
+  Flex,
+  FormControl,
+  FormLabel,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+} from "@chakra-ui/react";
 
 const Home: NextPage = () => {
+  const [aqi, setAqi] = useState<number>(5);
+  const [temperature, setTemperature] = useState<number>(20.5);
+  const [humidity, setHumidity] = useState<number>(78);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,7 +28,51 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <SectionResults />
+      <Flex borderColor="green.500" borderWidth={1} borderRadius={5} p={5}>
+        <FormControl px={3}>
+          <FormLabel htmlFor="aqi">aqi</FormLabel>
+          <NumberInput id="aqi" placeholder="AQI" defaultValue={aqi} onChange={(value) => setAqi(Number(value))}>
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </FormControl>
+        <FormControl px={3}>
+          <FormLabel htmlFor="temperature">temperature</FormLabel>
+          <NumberInput
+            id="temperature"
+            placeholder="Temperature"
+            defaultValue={temperature}
+            step={0.5}
+            onChange={(value) => setTemperature(Number(value))}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </FormControl>
+        <FormControl px={3}>
+          <FormLabel htmlFor="temperature">humidity</FormLabel>
+          <NumberInput
+            id="humidity"
+            placeholder="Humidity"
+            defaultValue={humidity}
+            onChange={(value) => setHumidity(Number(value))}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </FormControl>
+      </Flex>
+
+      <SectionResults aqi={aqi} temperature={temperature} humidity={humidity} />
     </div>
   );
 };
