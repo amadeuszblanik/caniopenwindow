@@ -23,9 +23,17 @@ interface SectionResultsProps {
   aqi: number;
   temperature: number;
   humidity: number;
+  lastUpdateTemperature: Date;
+  lastUpdatePollution: Date;
 }
 
-const SectionResults: React.FunctionComponent<SectionResultsProps> = ({ aqi, temperature, humidity }) => {
+const SectionResults: React.FunctionComponent<SectionResultsProps> = ({
+  aqi,
+  temperature,
+  humidity,
+  lastUpdateTemperature,
+  lastUpdatePollution,
+}) => {
   const breakpoints = useBreakpoint();
   const isMedium = breakpoints.includes("md");
 
@@ -52,7 +60,15 @@ const SectionResults: React.FunctionComponent<SectionResultsProps> = ({ aqi, tem
           <Text>
             Location: London, Greater London, United Kingdom
             <br />
-            Last update: {new Date("2022-01-23T15:00:00.000Z").toLocaleDateString()}
+            {lastUpdateTemperature === lastUpdatePollution ? (
+              <>Last update: {lastUpdateTemperature.toLocaleTimeString("en-GB")}</>
+            ) : (
+              <>
+                Last update temperature: {lastUpdateTemperature.toLocaleTimeString("en-GB")}
+                <br />
+                Last update pollution: {lastUpdatePollution.toLocaleTimeString("en-GB")}
+              </>
+            )}
           </Text>
         </GridItem>
         <GridItem

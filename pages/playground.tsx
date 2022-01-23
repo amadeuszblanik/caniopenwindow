@@ -8,6 +8,7 @@ import {
   Flex,
   FormControl,
   FormLabel,
+  Input,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -19,6 +20,8 @@ const Home: NextPage = () => {
   const [aqi, setAqi] = useState<number>(5);
   const [temperature, setTemperature] = useState<number>(20.5);
   const [humidity, setHumidity] = useState<number>(78);
+  const [lastUpdateTemperature, setLastUpdateTemperature] = useState<Date>(new Date());
+  const [lastUpdatePollution, setLastUpdatePollution] = useState<Date>(new Date());
 
   return (
     <div className={styles.container}>
@@ -28,7 +31,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Flex borderColor="green.500" borderWidth={1} borderRadius={5} p={5}>
+      <Flex borderColor="green.500" borderWidth={1} borderRadius={5} p={5} my={3}>
         <FormControl px={3}>
           <FormLabel htmlFor="aqi">aqi</FormLabel>
           <NumberInput id="aqi" placeholder="AQI" defaultValue={aqi} onChange={(value) => setAqi(Number(value))}>
@@ -71,8 +74,34 @@ const Home: NextPage = () => {
           </NumberInput>
         </FormControl>
       </Flex>
+      <Flex borderColor="green.500" borderWidth={1} borderRadius={5} p={5} my={3}>
+        <FormControl px={3}>
+          <FormLabel htmlFor="lastUpdateTemperature">lastUpdateTemperature</FormLabel>
+          <Input
+            placeholder="Last update temperature"
+            id="lastUpdateTemperature"
+            value={lastUpdateTemperature.toString()}
+            onBlur={({ target: { value } }) => setLastUpdateTemperature(new Date(value))}
+          />
+        </FormControl>
+        <FormControl px={3}>
+          <FormLabel htmlFor="lastUpdatePollution">lastUpdatePollution</FormLabel>
+          <Input
+            placeholder="Last update pollution"
+            id="lastUpdatePollution"
+            value={lastUpdatePollution.toString()}
+            onBlur={({ target: { value } }) => setLastUpdatePollution(new Date(value))}
+          />
+        </FormControl>
+      </Flex>
 
-      <SectionResults aqi={aqi} temperature={temperature} humidity={humidity} />
+      <SectionResults
+        aqi={aqi}
+        temperature={temperature}
+        humidity={humidity}
+        lastUpdateTemperature={lastUpdateTemperature}
+        lastUpdatePollution={lastUpdatePollution}
+      />
     </div>
   );
 };
