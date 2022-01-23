@@ -12,7 +12,7 @@ interface StatProps {
 
 const STAT_KIND_AQI = 150;
 const STAT_KIND_HUMIDITY = 100;
-const STAT_KIND_TEMPERATURE = 100;
+const STAT_KIND_TEMPERATURE = 50;
 
 const MAX_VALUES_PER_KIND = {
   [StatKind.AQI]: STAT_KIND_AQI,
@@ -42,14 +42,12 @@ const COLOR_VALUES = {
 };
 
 const TO_PERCENT = 100;
-const TEMPERATURE_ADD = 50;
 
 const Stat: React.FunctionComponent<StatProps> = ({ value, label, kind }) => {
   const valueAsNumber = parseInt(value);
-  const valueToCalculate = Number(kind === StatKind.Temperature ? valueAsNumber + TEMPERATURE_ADD : valueAsNumber);
   const color = highestValueElement(COLOR_VALUES[kind], valueAsNumber) || "gray.500";
 
-  const progressValue = (valueToCalculate / MAX_VALUES_PER_KIND[kind]) * TO_PERCENT;
+  const progressValue = (Math.abs(valueAsNumber) / MAX_VALUES_PER_KIND[kind]) * TO_PERCENT;
 
   return (
     <CircularProgress value={progressValue} size="120px" color={color}>
