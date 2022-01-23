@@ -57,7 +57,7 @@ const Stat: React.FunctionComponent<StatProps> = ({ value, label, kind }) => {
 
   return (
     <CircularProgress value={progressValue} size="120px" color={color}>
-      <CircularProgressLabel>
+      <CircularProgressLabel lineHeight={1}>
         {value}
         <br />
         <small>{label}</small>
