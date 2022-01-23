@@ -3,7 +3,8 @@ import React from "react";
 import StatusIllustration from "../../component/statusIllustration";
 import Stats from "../../component/stats";
 import useBreakpoint from "../../hooks/useBreakpoint";
-import { highestValueElement } from "../../utils";
+import { colorStatKind, highestValueElement } from "../../utils";
+import { StatKind } from "../../component/stat/types";
 
 const GRID_ELEMENTS_DEFAULT = 1;
 const GRID_ELEMENTS_MEDIUM = 2;
@@ -43,6 +44,7 @@ const SectionResults: React.FunctionComponent<SectionResultsProps> = ({
   const breakpoints = useBreakpoint();
   const isMedium = breakpoints.includes("md");
 
+  const headerColor = colorStatKind(StatKind.AQI, aqi);
   const headerCopy = highestValueElement(HEADER_COPY, aqi) || "Something gone wrong.";
 
   return (
@@ -59,7 +61,7 @@ const SectionResults: React.FunctionComponent<SectionResultsProps> = ({
             <Stats aqi={aqi} temperature={temperature} humidity={humidity} />
           </Box>
           <Box pb={5}>
-            <Heading minH={100} color="green.700" textAlign={isMedium ? "left" : "center"}>
+            <Heading minH={100} color={headerColor} textAlign={isMedium ? "left" : "center"}>
               {headerCopy}
             </Heading>
           </Box>

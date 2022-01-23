@@ -2,7 +2,7 @@ import React from "react";
 import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
 import { StatKind } from "./types";
 import { firstElement } from "bme-utils";
-import { highestValueElement } from "../../utils";
+import { colorStatKind, highestValueElement } from "../../utils";
 
 interface StatProps {
   value: string;
@@ -20,32 +20,11 @@ const MAX_VALUES_PER_KIND = {
   [StatKind.Temperature]: STAT_KIND_TEMPERATURE,
 };
 
-const COLOR_VALUES = {
-  [StatKind.AQI]: {
-    "0": "green.500",
-    "50": "yellow.300",
-    "150": "orange.400",
-    "200": "purple.500",
-    "300": "red.800",
-  },
-  [StatKind.Humidity]: {
-    "0": "orange.300",
-    "20": "green.500",
-    "60": "blue.400",
-  },
-  [StatKind.Temperature]: {
-    "-100": "blue.500",
-    "10": "teal.400",
-    "18": "green.500",
-    "32": "orange.300",
-  },
-};
-
 const TO_PERCENT = 100;
 
 const Stat: React.FunctionComponent<StatProps> = ({ value, label, kind }) => {
   const valueAsNumber = parseInt(value);
-  const color = highestValueElement(COLOR_VALUES[kind], valueAsNumber) || "gray.500";
+  const color = colorStatKind(kind, valueAsNumber);
 
   const progressValue = (Math.abs(valueAsNumber) / MAX_VALUES_PER_KIND[kind]) * TO_PERCENT;
 
