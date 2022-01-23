@@ -7,6 +7,7 @@ import {
   Grid,
   GridItem,
   Heading,
+  Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import useWindowResize from "../../hooks/useWindowResize";
@@ -59,9 +60,16 @@ const SectionResults: React.FunctionComponent = () => {
               </CircularProgress>
             </Box>
           </Flex>
-          <Heading color="green.700" textAlign={isMedium ? "left" : "center"}>
-            It&apos;s a wonderful day to go outside!
-          </Heading>
+          <Box pb={5}>
+            <Heading color="green.700" textAlign={isMedium ? "left" : "center"}>
+              It&apos;s a wonderful day to go outside!
+            </Heading>
+          </Box>
+          <Text>
+            Location: London, Greater London, United Kingdom
+            <br />
+            Last update: {new Date("2022-01-23T15:00:00.000Z").toLocaleDateString()}
+          </Text>
         </GridItem>
         <GridItem
           w="100%"
