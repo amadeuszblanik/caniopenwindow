@@ -23,6 +23,9 @@ interface SectionResultsProps {
   aqi: number;
   temperature: number;
   humidity: number;
+  city: string;
+  state: string;
+  country: string;
   lastUpdateTemperature: Date;
   lastUpdatePollution: Date;
 }
@@ -31,6 +34,9 @@ const SectionResults: React.FunctionComponent<SectionResultsProps> = ({
   aqi,
   temperature,
   humidity,
+  city,
+  state,
+  country,
   lastUpdateTemperature,
   lastUpdatePollution,
 }) => {
@@ -58,15 +64,15 @@ const SectionResults: React.FunctionComponent<SectionResultsProps> = ({
             </Heading>
           </Box>
           <Text>
-            Location: London, Greater London, United Kingdom
+            Location: {city}, {state}, {country}.
             <br />
             {lastUpdateTemperature === lastUpdatePollution ? (
-              <>Last update: {lastUpdateTemperature.toLocaleTimeString("en-GB")}</>
+              <>Last update: {lastUpdateTemperature.toLocaleTimeString("en-GB")}.</>
             ) : (
               <>
-                Last update temperature: {lastUpdateTemperature.toLocaleTimeString("en-GB")}
+                Last update temperature: {lastUpdateTemperature.toLocaleTimeString("en-GB")}.
                 <br />
-                Last update pollution: {lastUpdatePollution.toLocaleTimeString("en-GB")}
+                Last update pollution: {lastUpdatePollution.toLocaleTimeString("en-GB")}.
               </>
             )}
           </Text>

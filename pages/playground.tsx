@@ -99,6 +99,9 @@ const Home: NextPage = () => {
         aqi={aqi}
         temperature={temperature}
         humidity={humidity}
+        city="London"
+        state="Greater London"
+        country="United Kingdom"
         lastUpdateTemperature={lastUpdateTemperature}
         lastUpdatePollution={lastUpdatePollution}
       />
