@@ -1,5 +1,13 @@
-const MEDIUM = 880;
+const XS = 0;
+const SM = 520;
+const MD = 880;
+const LG = 1280;
 
-export enum Breakpoints {
-  Medium = MEDIUM,
-}
+const Breakpoints = {
+  xs: XS,
+  sm: SM,
+  md: MD,
+  lg: LG,
+};
+
+export default Breakpoints;

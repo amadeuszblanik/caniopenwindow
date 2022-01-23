@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { debounce } from "bme-utils";
 
 const useWindowResize = () => {
   const [width, setWidth] = useState<number | undefined>(undefined);
@@ -12,10 +13,10 @@ const useWindowResize = () => {
       setHeight(innerHeight);
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", debounce(handleResize));
     handleResize();
 
-    return () => window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", debounce(handleResize));
   }, []);
 
   return { width, height };
