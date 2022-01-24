@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { NearestCityApi } from "../src/types/nearestCity.api";
@@ -6,6 +6,9 @@ import SectionResults from "../src/section/results";
 import { FailedApi } from "../src/types/failed.api";
 import { StatusApi } from "../src/types/status.api";
 import { Text } from "@chakra-ui/react";
+import { Headers } from "next/dist/server/web/spec-compliant/headers";
+
+const LOCAL_IP = ["::1", "127.0.0.1"];
 
 interface HomeProps {
   nearestCity: NearestCityApi | FailedApi;
@@ -61,8 +64,23 @@ const Home: NextPage<HomeProps> = ({ nearestCity }) => {
   }
 };
 
-export async function getStaticProps() {
-  const res = await fetch(`https://api.airvisual.com/v2/nearest_city?key=${process.env.API_KEY}`);
+export const getServerSideProps: GetServerSideProps = async ({
+  req: {
+    headers,
+    connection: { remoteAddress },
+  },
+}) => {
+  const remoteIp = headers["x-forwarded-for"] || headers.forwarded || remoteAddress || "1.1.1.1";
+  const ip = LOCAL_IP.includes(String(remoteIp)) ? "1.1.1.1" : remoteIp;
+
+  const requestHeaders = new Headers();
+  requestHeaders.set("x-forwarded-for", String(ip));
+  const res = await fetch(
+    `https://api.airvisual.com/v2/nearest_city?key=${process.env.API_KEY}&x-forwarded-for=${ip}`,
+    {
+      headers: requestHeaders,
+    },
+  );
   const nearestCity = (await res.json()) as NearestCityApi | FailedApi;
 
   return {
@@ -70,6 +88,6 @@ export async function getStaticProps() {
       nearestCity,
     },
   };
-}
+};
 
 export default Home;
